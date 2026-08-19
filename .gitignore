@@ -1,19 +1,22 @@
-# Node.js
+# Node
 node_modules/
 
 # Python
 .venv/
 venv/
 env/
-
-# Python cache
 __pycache__/
 *.pyc
 
-# Environment variables
+# Environment files
 .env
 
-# Build files
+# Build
 dist/
 build/
+
+# Logs
 *.log
+
+# Uploaded videos
+aiprj/backend/uploads/
