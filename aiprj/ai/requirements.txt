@@ -1,0 +1,12 @@
+Flask==3.0.3
+Flask-Cors==4.0.1
+opencv-python-headless>=4.8.0
+ultralytics>=8.0.0
+numpy>=1.23.0
+lap>=0.5.12
+pyyaml>=6.0
+# Optional but recommended for training: ultralytics automatically adds
+# blur/median-blur/CLAHE/gamma/compression augmentations when this is
+# installed (see train.py's AUGMENTATION section). Not required for
+# inference (app.py / detect.py) -- only for train.py.
+albumentations>=1.4.0

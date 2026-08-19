@@ -1,0 +1,30 @@
+# YOLO dataset config for the Smart AI Traffic Control System.
+#
+# No data has been added yet -- populate the folders below with your own
+# training images before running train.py:
+#
+#   dataset/images/train/*.jpg   dataset/labels/train/*.txt
+#   dataset/images/val/*.jpg     dataset/labels/val/*.txt
+#   dataset/images/test/*.jpg    dataset/labels/test/*.txt  (optional)
+#
+# Each label .txt file must have the same base filename as its image and one
+# line per object in YOLO format:
+#   <class_id> <x_center> <y_center> <width> <height>
+# where all four numbers are normalized to 0-1 relative to image size.
+#
+# If you already have a dataset with different class names/ids, edit `names`
+# below to match it -- detect.py resolves classes BY NAME (car, motorcycle,
+# bus, truck, ambulance), not by id, so the ids here can be in any order as
+# long as the names match.
+
+path: .
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: car
+  1: motorcycle
+  2: bus
+  3: truck
+  4: ambulance

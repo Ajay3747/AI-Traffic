@@ -1,0 +1,493 @@
+2026-08-18 10:38:08,589 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.93.224.165:5000
+2026-08-18 10:38:08,603 [INFO] [33mPress CTRL+C to quit[0m
+2026-08-18 10:38:08,609 [INFO]  * Restarting with stat
+2026-08-18 10:38:13,096 [WARNING]  * Debugger is active!
+2026-08-18 10:38:13,102 [INFO]  * Debugger PIN: 996-474-464
+2026-08-18 10:38:13,203 [INFO] 127.0.0.1 - - [18/Aug/2026 10:38:13] "GET /health HTTP/1.1" 200 -
+2026-08-18 10:44:37,620 [INFO] 127.0.0.1 - - [18/Aug/2026 10:44:37] "[33mGET / HTTP/1.1[0m" 404 -
+2026-08-18 10:45:51,189 [INFO] Received analyze request for 0 roads: []
+2026-08-18 10:45:51,190 [INFO] Analysis complete. Results: {}
+2026-08-18 10:45:51,191 [INFO] 127.0.0.1 - - [18/Aug/2026 10:45:51] "POST /analyze HTTP/1.1" 200 -
+2026-08-18 10:48:10,598 [INFO] Received analyze request for 4 roads: ['North', 'South', 'East', 'West']
+2026-08-18 10:48:10,599 [INFO] [North] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787030259597-726386897.mp4
+2026-08-18 10:48:10,601 [WARNING] No custom-trained model found at 'runs/detect/train/weights/best.pt'. Falling back to 'yolov8n.pt' (COCO classes only) -- ambulance detection will stay unavailable (emergency will always be False) until you train one with train.py. See dataset/data.yaml for the expected dataset layout.
+2026-08-18 10:48:21,493 [INFO] Model loaded from 'yolov8n.pt'. Vehicle class ids: [2, 3, 5, 7]. Ambulance class id: None (available: False).
+2026-08-18 10:48:23,253 [INFO] [North] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 10:48:24,327 [INFO] [North] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 10:48:33,680 [INFO] [North] Counted unique vehicle track_id=12 (total so far=3).
+2026-08-18 10:48:34,910 [INFO] [North] Counted unique vehicle track_id=23 (total so far=4).
+2026-08-18 10:48:36,453 [INFO] [North] Counted unique vehicle track_id=49 (total so far=5).
+2026-08-18 10:48:41,843 [INFO] [North] Analysis complete. frames_processed=220, unique_vehicles=5, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 10:48:41,907 [INFO] [South] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787030276068-182462401.mp4
+2026-08-18 10:49:38,601 [INFO] [South] Analysis complete. frames_processed=509, unique_vehicles=0, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 10:49:38,669 [INFO] [East] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787030278371-814186487.mp4
+2026-08-18 10:49:39,723 [INFO] [East] Counted unique vehicle track_id=4 (total so far=1).
+2026-08-18 10:49:40,160 [INFO] [East] Counted unique vehicle track_id=1 (total so far=2).
+2026-08-18 10:49:40,878 [INFO] [East] Counted unique vehicle track_id=3 (total so far=3).
+2026-08-18 10:49:43,242 [INFO] [East] Counted unique vehicle track_id=166 (total so far=4).
+2026-08-18 10:49:43,604 [INFO] [East] Counted unique vehicle track_id=76 (total so far=5).
+2026-08-18 10:49:44,955 [INFO] [East] Counted unique vehicle track_id=164 (total so far=6).
+2026-08-18 10:49:45,203 [INFO] [East] Counted unique vehicle track_id=165 (total so far=7).
+2026-08-18 10:49:45,465 [INFO] [East] Counted unique vehicle track_id=167 (total so far=8).
+2026-08-18 10:49:49,177 [INFO] [East] Counted unique vehicle track_id=341 (total so far=9).
+2026-08-18 10:49:49,330 [INFO] [East] Counted unique vehicle track_id=340 (total so far=10).
+2026-08-18 10:49:54,283 [INFO] 127.0.0.1 - - [18/Aug/2026 10:49:54] "GET /health HTTP/1.1" 200 -
+2026-08-18 10:49:55,514 [INFO] [East] Counted unique vehicle track_id=342 (total so far=11).
+2026-08-18 10:50:02,972 [INFO] 127.0.0.1 - - [18/Aug/2026 10:50:02] "GET /health HTTP/1.1" 200 -
+2026-08-18 10:50:04,096 [INFO] [East] Counted unique vehicle track_id=433 (total so far=12).
+2026-08-18 10:50:05,159 [INFO] [East] Counted unique vehicle track_id=435 (total so far=13).
+2026-08-18 10:50:09,571 [INFO] [East] Counted unique vehicle track_id=659 (total so far=14).
+2026-08-18 10:50:10,827 [INFO] [East] Counted unique vehicle track_id=656 (total so far=15).
+2026-08-18 10:50:11,114 [INFO] [East] Counted unique vehicle track_id=657 (total so far=16).
+2026-08-18 10:50:13,632 [INFO] [East] Counted unique vehicle track_id=1001 (total so far=17).
+2026-08-18 10:50:15,083 [INFO] [East] Counted unique vehicle track_id=999 (total so far=18).
+2026-08-18 10:50:15,085 [INFO] [East] Counted unique vehicle track_id=998 (total so far=19).
+2026-08-18 10:50:15,247 [INFO] [East] Counted unique vehicle track_id=996 (total so far=20).
+2026-08-18 10:50:18,444 [INFO] [East] Counted unique vehicle track_id=1139 (total so far=21).
+2026-08-18 10:50:18,527 [INFO] [East] Analysis complete. frames_processed=382, unique_vehicles=21, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 10:50:18,603 [INFO] [West] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787030280747-560011678.mp4
+2026-08-18 10:50:18,840 [INFO] [West] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 10:50:18,841 [INFO] [West] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 10:50:18,842 [INFO] [West] Counted unique vehicle track_id=14 (total so far=3).
+2026-08-18 10:50:18,843 [INFO] [West] Counted unique vehicle track_id=15 (total so far=4).
+2026-08-18 10:50:18,843 [INFO] [West] Counted unique vehicle track_id=16 (total so far=5).
+2026-08-18 10:50:18,994 [INFO] [West] Counted unique vehicle track_id=10 (total so far=6).
+2026-08-18 10:50:19,855 [INFO] [West] Counted unique vehicle track_id=11 (total so far=7).
+2026-08-18 10:50:20,999 [INFO] [West] Counted unique vehicle track_id=3 (total so far=8).
+2026-08-18 10:50:22,308 [INFO] [West] Counted unique vehicle track_id=5 (total so far=9).
+2026-08-18 10:50:23,064 [INFO] [West] Counted unique vehicle track_id=9 (total so far=10).
+2026-08-18 10:50:23,904 [INFO] [West] Counted unique vehicle track_id=8 (total so far=11).
+2026-08-18 10:50:25,734 [INFO] [West] Counted unique vehicle track_id=12 (total so far=12).
+2026-08-18 10:50:26,672 [INFO] [West] Counted unique vehicle track_id=6 (total so far=13).
+2026-08-18 10:50:30,685 [INFO] [West] Counted unique vehicle track_id=1867 (total so far=14).
+2026-08-18 10:50:30,723 [INFO] [West] Counted unique vehicle track_id=1868 (total so far=15).
+2026-08-18 10:50:30,724 [INFO] [West] Counted unique vehicle track_id=1869 (total so far=16).
+2026-08-18 10:50:30,725 [INFO] [West] Counted unique vehicle track_id=1874 (total so far=17).
+2026-08-18 10:50:30,725 [INFO] [West] Counted unique vehicle track_id=1877 (total so far=18).
+2026-08-18 10:50:30,726 [INFO] [West] Counted unique vehicle track_id=1879 (total so far=19).
+2026-08-18 10:50:30,781 [INFO] [West] Counted unique vehicle track_id=1871 (total so far=20).
+2026-08-18 10:50:31,112 [INFO] [West] Counted unique vehicle track_id=1875 (total so far=21).
+2026-08-18 10:50:31,926 [INFO] [West] Counted unique vehicle track_id=1870 (total so far=22).
+2026-08-18 10:50:34,444 [INFO] [West] Counted unique vehicle track_id=1876 (total so far=23).
+2026-08-18 10:50:35,397 [INFO] [West] Counted unique vehicle track_id=1878 (total so far=24).
+2026-08-18 10:50:36,580 [INFO] [West] Counted unique vehicle track_id=1881 (total so far=25).
+2026-08-18 10:50:39,244 [INFO] [West] Counted unique vehicle track_id=1873 (total so far=26).
+2026-08-18 10:50:46,727 [INFO] [West] Counted unique vehicle track_id=1880 (total so far=27).
+2026-08-18 10:51:01,604 [INFO] [West] Counted unique vehicle track_id=4913 (total so far=28).
+2026-08-18 10:51:01,618 [INFO] [West] Counted unique vehicle track_id=4914 (total so far=29).
+2026-08-18 10:51:01,619 [INFO] [West] Counted unique vehicle track_id=4915 (total so far=30).
+2026-08-18 10:51:01,620 [INFO] [West] Counted unique vehicle track_id=4916 (total so far=31).
+2026-08-18 10:51:01,621 [INFO] [West] Counted unique vehicle track_id=4917 (total so far=32).
+2026-08-18 10:51:03,658 [INFO] [West] Counted unique vehicle track_id=4918 (total so far=33).
+2026-08-18 10:51:04,340 [INFO] [West] Counted unique vehicle track_id=4920 (total so far=34).
+2026-08-18 10:51:04,346 [INFO] [West] Counted unique vehicle track_id=4922 (total so far=35).
+2026-08-18 10:51:07,449 [INFO] [West] Counted unique vehicle track_id=4930 (total so far=36).
+2026-08-18 10:51:09,724 [INFO] [West] Counted unique vehicle track_id=4921 (total so far=37).
+2026-08-18 10:51:09,878 [INFO] [West] Counted unique vehicle track_id=4919 (total so far=38).
+2026-08-18 10:51:14,885 [INFO] [West] Counted unique vehicle track_id=4924 (total so far=39).
+2026-08-18 10:51:20,815 [INFO] [West] Counted unique vehicle track_id=4925 (total so far=40).
+2026-08-18 10:51:22,569 [INFO] [West] Analysis complete. frames_processed=660, unique_vehicles=40, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 10:51:22,594 [INFO] Analysis complete. Results: {'North': {'count': 5, 'seconds': 15, 'emergency': False}, 'South': {'count': 0, 'seconds': 15, 'emergency': False}, 'East': {'count': 21, 'seconds': 22, 'emergency': False}, 'West': {'count': 40, 'seconds': 34, 'emergency': False}}
+2026-08-18 10:51:22,596 [INFO] 127.0.0.1 - - [18/Aug/2026 10:51:22] "POST /analyze HTTP/1.1" 200 -
+2026-08-18 10:51:37,840 [INFO] Received analyze request for 0 roads: []
+2026-08-18 10:51:37,841 [INFO] Analysis complete. Results: {}
+2026-08-18 10:51:37,842 [INFO] 127.0.0.1 - - [18/Aug/2026 10:51:37] "POST /analyze HTTP/1.1" 200 -
+2026-08-18 10:52:22,900 [INFO] Received analyze request for 4 roads: ['North', 'South', 'East', 'West']
+2026-08-18 10:52:22,902 [INFO] [North] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787030259597-726386897.mp4
+2026-08-18 10:52:23,855 [INFO] [North] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 10:52:24,567 [INFO] [North] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 10:52:29,145 [INFO] [North] Counted unique vehicle track_id=94 (total so far=3).
+2026-08-18 10:52:29,741 [INFO] [North] Counted unique vehicle track_id=92 (total so far=4).
+2026-08-18 10:52:32,906 [INFO] [North] Counted unique vehicle track_id=212 (total so far=5).
+2026-08-18 10:52:32,934 [INFO] [North] Counted unique vehicle track_id=213 (total so far=6).
+2026-08-18 10:52:40,920 [INFO] [North] Analysis complete. frames_processed=220, unique_vehicles=6, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 10:52:40,980 [INFO] [South] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787030276068-182462401.mp4
+2026-08-18 10:53:20,869 [INFO] [South] Analysis complete. frames_processed=509, unique_vehicles=0, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 10:53:20,931 [INFO] [East] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787030278371-814186487.mp4
+2026-08-18 10:53:22,756 [INFO] [East] Counted unique vehicle track_id=4 (total so far=1).
+2026-08-18 10:53:23,444 [INFO] [East] Counted unique vehicle track_id=1 (total so far=2).
+2026-08-18 10:53:24,719 [INFO] [East] Counted unique vehicle track_id=3 (total so far=3).
+2026-08-18 10:53:28,672 [INFO] [East] Counted unique vehicle track_id=167 (total so far=4).
+2026-08-18 10:53:29,254 [INFO] [East] Counted unique vehicle track_id=77 (total so far=5).
+2026-08-18 10:53:31,448 [INFO] [East] Counted unique vehicle track_id=165 (total so far=6).
+2026-08-18 10:53:32,294 [INFO] [East] Counted unique vehicle track_id=168 (total so far=7).
+2026-08-18 10:53:37,251 [INFO] [East] Counted unique vehicle track_id=341 (total so far=8).
+2026-08-18 10:53:37,357 [INFO] [East] Counted unique vehicle track_id=340 (total so far=9).
+2026-08-18 10:53:39,833 [INFO] [East] Counted unique vehicle track_id=486 (total so far=10).
+2026-08-18 10:53:43,128 [INFO] [East] Counted unique vehicle track_id=487 (total so far=11).
+2026-08-18 10:53:43,589 [INFO] [East] Counted unique vehicle track_id=601 (total so far=12).
+2026-08-18 10:53:54,111 [INFO] [East] Counted unique vehicle track_id=602 (total so far=13).
+2026-08-18 10:54:01,408 [INFO] [East] Counted unique vehicle track_id=1203 (total so far=14).
+2026-08-18 10:54:05,191 [INFO] [East] Counted unique vehicle track_id=1201 (total so far=15).
+2026-08-18 10:54:05,193 [INFO] [East] Counted unique vehicle track_id=1200 (total so far=16).
+2026-08-18 10:54:05,490 [INFO] [East] Counted unique vehicle track_id=1198 (total so far=17).
+2026-08-18 10:54:09,331 [INFO] [East] Counted unique vehicle track_id=1342 (total so far=18).
+2026-08-18 10:54:09,423 [INFO] [East] Analysis complete. frames_processed=382, unique_vehicles=18, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 10:54:09,494 [INFO] [West] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787030280747-560011678.mp4
+2026-08-18 10:54:09,705 [INFO] [West] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 10:54:09,706 [INFO] [West] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 10:54:09,708 [INFO] [West] Counted unique vehicle track_id=14 (total so far=3).
+2026-08-18 10:54:09,709 [INFO] [West] Counted unique vehicle track_id=15 (total so far=4).
+2026-08-18 10:54:09,710 [INFO] [West] Counted unique vehicle track_id=16 (total so far=5).
+2026-08-18 10:54:09,892 [INFO] [West] Counted unique vehicle track_id=10 (total so far=6).
+2026-08-18 10:54:10,818 [INFO] [West] Counted unique vehicle track_id=11 (total so far=7).
+2026-08-18 10:54:12,500 [INFO] [West] Counted unique vehicle track_id=3 (total so far=8).
+2026-08-18 10:54:14,772 [INFO] [West] Counted unique vehicle track_id=5 (total so far=9).
+2026-08-18 10:54:15,986 [INFO] [West] Counted unique vehicle track_id=9 (total so far=10).
+2026-08-18 10:54:17,377 [INFO] [West] Counted unique vehicle track_id=8 (total so far=11).
+2026-08-18 10:54:20,481 [INFO] [West] Counted unique vehicle track_id=12 (total so far=12).
+2026-08-18 10:54:22,065 [INFO] [West] Counted unique vehicle track_id=6 (total so far=13).
+2026-08-18 10:54:30,311 [INFO] [West] Counted unique vehicle track_id=1867 (total so far=14).
+2026-08-18 10:54:30,324 [INFO] [West] Counted unique vehicle track_id=1868 (total so far=15).
+2026-08-18 10:54:30,325 [INFO] [West] Counted unique vehicle track_id=1869 (total so far=16).
+2026-08-18 10:54:30,327 [INFO] [West] Counted unique vehicle track_id=1874 (total so far=17).
+2026-08-18 10:54:30,327 [INFO] [West] Counted unique vehicle track_id=1877 (total so far=18).
+2026-08-18 10:54:30,328 [INFO] [West] Counted unique vehicle track_id=1879 (total so far=19).
+2026-08-18 10:54:30,442 [INFO] [West] Counted unique vehicle track_id=1871 (total so far=20).
+2026-08-18 10:54:31,069 [INFO] [West] Counted unique vehicle track_id=1875 (total so far=21).
+2026-08-18 10:54:32,395 [INFO] [West] Counted unique vehicle track_id=1870 (total so far=22).
+2026-08-18 10:54:36,762 [INFO] [West] Counted unique vehicle track_id=1876 (total so far=23).
+2026-08-18 10:54:38,141 [INFO] [West] Counted unique vehicle track_id=1878 (total so far=24).
+2026-08-18 10:54:39,124 [INFO] [West] Counted unique vehicle track_id=1881 (total so far=25).
+2026-08-18 10:54:41,626 [INFO] [West] Counted unique vehicle track_id=1873 (total so far=26).
+2026-08-18 10:54:44,170 [INFO] [West] Counted unique vehicle track_id=3025 (total so far=27).
+2026-08-18 10:54:44,172 [INFO] [West] Counted unique vehicle track_id=3026 (total so far=28).
+2026-08-18 10:54:44,173 [INFO] [West] Counted unique vehicle track_id=3029 (total so far=29).
+2026-08-18 10:54:44,174 [INFO] [West] Counted unique vehicle track_id=3031 (total so far=30).
+2026-08-18 10:54:45,700 [INFO] [West] Counted unique vehicle track_id=3027 (total so far=31).
+2026-08-18 10:54:45,923 [INFO] [West] Counted unique vehicle track_id=3030 (total so far=32).
+2026-08-18 10:54:48,514 [INFO] [West] Counted unique vehicle track_id=3028 (total so far=33).
+2026-08-18 10:54:50,354 [INFO] [West] Counted unique vehicle track_id=3033 (total so far=34).
+2026-08-18 10:54:50,852 [INFO] [West] Counted unique vehicle track_id=3032 (total so far=35).
+2026-08-18 10:54:53,226 [INFO] [West] Counted unique vehicle track_id=3034 (total so far=36).
+2026-08-18 10:55:01,951 [INFO] [West] Counted unique vehicle track_id=3035 (total so far=37).
+2026-08-18 10:55:09,262 [INFO] [West] Counted unique vehicle track_id=5391 (total so far=38).
+2026-08-18 10:55:09,268 [INFO] [West] Counted unique vehicle track_id=5392 (total so far=39).
+2026-08-18 10:55:09,269 [INFO] [West] Counted unique vehicle track_id=5393 (total so far=40).
+2026-08-18 10:55:09,269 [INFO] [West] Counted unique vehicle track_id=5394 (total so far=41).
+2026-08-18 10:55:09,270 [INFO] [West] Counted unique vehicle track_id=5395 (total so far=42).
+2026-08-18 10:55:09,767 [INFO] [West] Counted unique vehicle track_id=5398 (total so far=43).
+2026-08-18 10:55:11,067 [INFO] [West] Counted unique vehicle track_id=5401 (total so far=44).
+2026-08-18 10:55:13,703 [INFO] [West] Counted unique vehicle track_id=5396 (total so far=45).
+2026-08-18 10:55:15,474 [INFO] [West] Analysis complete. frames_processed=660, unique_vehicles=45, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 10:55:15,525 [INFO] Analysis complete. Results: {'North': {'count': 6, 'seconds': 15, 'emergency': False}, 'South': {'count': 0, 'seconds': 15, 'emergency': False}, 'East': {'count': 18, 'seconds': 20, 'emergency': False}, 'West': {'count': 45, 'seconds': 37, 'emergency': False}}
+2026-08-18 10:55:15,527 [INFO] 127.0.0.1 - - [18/Aug/2026 10:55:15] "POST /analyze HTTP/1.1" 200 -
+2026-08-18 11:11:03,725 [INFO] Received analyze request for 4 roads: ['North', 'South', 'East', 'West']
+2026-08-18 11:11:03,727 [INFO] [North] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031650940-84101837.mp4
+2026-08-18 11:11:04,817 [INFO] [North] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 11:11:06,132 [INFO] [North] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 11:11:16,052 [INFO] [North] Counted unique vehicle track_id=99 (total so far=3).
+2026-08-18 11:11:17,268 [INFO] [North] Counted unique vehicle track_id=97 (total so far=4).
+2026-08-18 11:11:20,617 [INFO] [North] Counted unique vehicle track_id=217 (total so far=5).
+2026-08-18 11:11:20,626 [INFO] [North] Counted unique vehicle track_id=218 (total so far=6).
+2026-08-18 11:11:26,027 [INFO] [North] Analysis complete. frames_processed=220, unique_vehicles=6, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:11:26,052 [INFO] [South] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031658766-293930156.mp4
+2026-08-18 11:11:26,217 [INFO] [South] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 11:11:26,256 [INFO] [South] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 11:11:26,257 [INFO] [South] Counted unique vehicle track_id=14 (total so far=3).
+2026-08-18 11:11:26,257 [INFO] [South] Counted unique vehicle track_id=15 (total so far=4).
+2026-08-18 11:11:26,258 [INFO] [South] Counted unique vehicle track_id=16 (total so far=5).
+2026-08-18 11:11:26,364 [INFO] [South] Counted unique vehicle track_id=10 (total so far=6).
+2026-08-18 11:11:26,861 [INFO] [South] Counted unique vehicle track_id=11 (total so far=7).
+2026-08-18 11:11:28,741 [INFO] [South] Counted unique vehicle track_id=3 (total so far=8).
+2026-08-18 11:11:31,781 [INFO] [South] Counted unique vehicle track_id=5 (total so far=9).
+2026-08-18 11:11:32,692 [INFO] [South] Counted unique vehicle track_id=9 (total so far=10).
+2026-08-18 11:11:33,517 [INFO] [South] Counted unique vehicle track_id=8 (total so far=11).
+2026-08-18 11:11:35,383 [INFO] [South] Counted unique vehicle track_id=12 (total so far=12).
+2026-08-18 11:11:36,362 [INFO] [South] Counted unique vehicle track_id=6 (total so far=13).
+2026-08-18 11:11:40,251 [INFO] [South] Counted unique vehicle track_id=1866 (total so far=14).
+2026-08-18 11:11:40,292 [INFO] [South] Counted unique vehicle track_id=1867 (total so far=15).
+2026-08-18 11:11:40,293 [INFO] [South] Counted unique vehicle track_id=1868 (total so far=16).
+2026-08-18 11:11:40,293 [INFO] [South] Counted unique vehicle track_id=1873 (total so far=17).
+2026-08-18 11:11:40,293 [INFO] [South] Counted unique vehicle track_id=1876 (total so far=18).
+2026-08-18 11:11:40,294 [INFO] [South] Counted unique vehicle track_id=1878 (total so far=19).
+2026-08-18 11:11:40,354 [INFO] [South] Counted unique vehicle track_id=1870 (total so far=20).
+2026-08-18 11:11:40,676 [INFO] [South] Counted unique vehicle track_id=1874 (total so far=21).
+2026-08-18 11:11:41,360 [INFO] [South] Counted unique vehicle track_id=1869 (total so far=22).
+2026-08-18 11:11:44,070 [INFO] [South] Counted unique vehicle track_id=1875 (total so far=23).
+2026-08-18 11:11:45,061 [INFO] [South] Counted unique vehicle track_id=1877 (total so far=24).
+2026-08-18 11:11:45,882 [INFO] [South] Counted unique vehicle track_id=1880 (total so far=25).
+2026-08-18 11:11:47,615 [INFO] [South] Counted unique vehicle track_id=1872 (total so far=26).
+2026-08-18 11:11:49,392 [INFO] [South] Counted unique vehicle track_id=3024 (total so far=27).
+2026-08-18 11:11:49,430 [INFO] [South] Counted unique vehicle track_id=3025 (total so far=28).
+2026-08-18 11:11:49,431 [INFO] [South] Counted unique vehicle track_id=3028 (total so far=29).
+2026-08-18 11:11:49,431 [INFO] [South] Counted unique vehicle track_id=3030 (total so far=30).
+2026-08-18 11:11:50,432 [INFO] [South] Counted unique vehicle track_id=3026 (total so far=31).
+2026-08-18 11:11:50,655 [INFO] [South] Counted unique vehicle track_id=3029 (total so far=32).
+2026-08-18 11:11:52,128 [INFO] [South] Counted unique vehicle track_id=3027 (total so far=33).
+2026-08-18 11:11:53,133 [INFO] [South] Counted unique vehicle track_id=3032 (total so far=34).
+2026-08-18 11:11:53,488 [INFO] [South] Counted unique vehicle track_id=3031 (total so far=35).
+2026-08-18 11:11:54,347 [INFO] [South] Counted unique vehicle track_id=3033 (total so far=36).
+2026-08-18 11:11:57,721 [INFO] [South] Counted unique vehicle track_id=3034 (total so far=37).
+2026-08-18 11:12:04,117 [INFO] [South] Counted unique vehicle track_id=5390 (total so far=38).
+2026-08-18 11:12:04,120 [INFO] [South] Counted unique vehicle track_id=5391 (total so far=39).
+2026-08-18 11:12:04,123 [INFO] [South] Counted unique vehicle track_id=5392 (total so far=40).
+2026-08-18 11:12:04,124 [INFO] [South] Counted unique vehicle track_id=5393 (total so far=41).
+2026-08-18 11:12:04,125 [INFO] [South] Counted unique vehicle track_id=5394 (total so far=42).
+2026-08-18 11:12:04,689 [INFO] [South] Counted unique vehicle track_id=5397 (total so far=43).
+2026-08-18 11:12:05,967 [INFO] [South] Counted unique vehicle track_id=5400 (total so far=44).
+2026-08-18 11:12:08,092 [INFO] [South] Counted unique vehicle track_id=5395 (total so far=45).
+2026-08-18 11:12:09,700 [INFO] [South] Analysis complete. frames_processed=660, unique_vehicles=45, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:12:09,767 [INFO] [East] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031655729-290839733.mp4
+2026-08-18 11:12:30,600 [INFO] Received analyze request for 4 roads: ['North', 'South', 'East', 'West']
+2026-08-18 11:12:30,602 [INFO] [North] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031741586-230198292.mp4
+2026-08-18 11:12:31,475 [ERROR] [East] Tracking backend failed ('DetectionPredictor' object has no attribute 'trackers'); falling back to per-frame detection for the rest of this video (unique-vehicle counting will degrade).
+2026-08-18 11:12:31,836 [INFO] [North] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 11:12:34,497 [INFO] [North] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 11:12:49,205 [INFO] [North] Counted unique vehicle track_id=100 (total so far=3).
+2026-08-18 11:12:50,328 [INFO] [North] Counted unique vehicle track_id=101 (total so far=4).
+2026-08-18 11:13:14,385 [INFO] [North] Analysis complete. frames_processed=220, unique_vehicles=4, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:13:14,418 [INFO] [South] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031743241-413955104.mp4
+2026-08-18 11:13:54,232 [INFO] [East] Analysis complete. frames_processed=509, unique_vehicles=0, confirmed_ambulances=0, emergency=False, tracking_supported=False.
+2026-08-18 11:13:54,366 [INFO] [West] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031652720-864376473.mp4
+2026-08-18 11:13:55,597 [ERROR] [South] Tracking backend failed ('DetectionPredictor' object has no attribute 'trackers'); falling back to per-frame detection for the rest of this video (unique-vehicle counting will degrade).
+2026-08-18 11:14:03,885 [INFO] [West] Counted unique vehicle track_id=3 (total so far=1).
+2026-08-18 11:14:13,355 [INFO] [West] Counted unique vehicle track_id=216 (total so far=2).
+2026-08-18 11:14:13,357 [INFO] [West] Counted unique vehicle track_id=218 (total so far=3).
+2026-08-18 11:14:15,312 [INFO] [West] Counted unique vehicle track_id=259 (total so far=4).
+2026-08-18 11:14:16,117 [INFO] [West] Counted unique vehicle track_id=257 (total so far=5).
+2026-08-18 11:14:21,122 [INFO] [West] Counted unique vehicle track_id=316 (total so far=6).
+2026-08-18 11:14:34,209 [INFO] [West] Counted unique vehicle track_id=437 (total so far=7).
+2026-08-18 11:14:34,388 [INFO] [West] Counted unique vehicle track_id=436 (total so far=8).
+2026-08-18 11:14:56,348 [INFO] [West] Counted unique vehicle track_id=734 (total so far=9).
+2026-08-18 11:15:00,362 [INFO] [West] Counted unique vehicle track_id=818 (total so far=10).
+2026-08-18 11:15:22,333 [INFO] [West] Counted unique vehicle track_id=822 (total so far=11).
+2026-08-18 11:15:39,816 [INFO] [West] Counted unique vehicle track_id=1299 (total so far=12).
+2026-08-18 11:15:40,461 [INFO] [South] Analysis complete. frames_processed=509, unique_vehicles=0, confirmed_ambulances=0, emergency=False, tracking_supported=False.
+2026-08-18 11:15:40,554 [INFO] [East] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031744935-673206687.mp4
+2026-08-18 11:15:42,316 [INFO] [West] Counted unique vehicle track_id=6 (total so far=13).
+2026-08-18 11:15:51,184 [INFO] [West] Counted unique vehicle track_id=9 (total so far=14).
+2026-08-18 11:15:51,677 [INFO] [West] Counted unique vehicle track_id=1 (total so far=15).
+2026-08-18 11:15:53,238 [INFO] [East] Counted unique vehicle track_id=9 (total so far=1).
+2026-08-18 11:16:08,332 [INFO] [West] Counted unique vehicle track_id=368 (total so far=16).
+2026-08-18 11:16:08,825 [INFO] [West] Analysis complete. frames_processed=382, unique_vehicles=16, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:16:08,959 [INFO] Analysis complete. Results: {'North': {'count': 6, 'seconds': 15, 'emergency': False}, 'South': {'count': 45, 'seconds': 37, 'emergency': False}, 'East': {'count': 0, 'seconds': 15, 'emergency': False}, 'West': {'count': 16, 'seconds': 19, 'emergency': False}}
+2026-08-18 11:16:08,965 [INFO] 127.0.0.1 - - [18/Aug/2026 11:16:08] "POST /analyze HTTP/1.1" 200 -
+2026-08-18 11:16:09,375 [INFO] [East] Counted unique vehicle track_id=456 (total so far=2).
+2026-08-18 11:16:09,397 [INFO] [East] Counted unique vehicle track_id=458 (total so far=3).
+2026-08-18 11:16:11,802 [INFO] [East] Counted unique vehicle track_id=455 (total so far=4).
+2026-08-18 11:16:16,931 [INFO] [East] Counted unique vehicle track_id=453 (total so far=5).
+2026-08-18 11:16:29,575 [INFO] [East] Counted unique vehicle track_id=665 (total so far=6).
+2026-08-18 11:16:29,786 [INFO] [East] Counted unique vehicle track_id=664 (total so far=7).
+2026-08-18 11:16:35,655 [INFO] [East] Counted unique vehicle track_id=813 (total so far=8).
+2026-08-18 11:16:43,056 [INFO] [East] Counted unique vehicle track_id=814 (total so far=9).
+2026-08-18 11:16:43,984 [INFO] [East] Counted unique vehicle track_id=931 (total so far=10).
+2026-08-18 11:16:58,309 [INFO] [East] Counted unique vehicle track_id=932 (total so far=11).
+2026-08-18 11:17:07,996 [INFO] [East] Counted unique vehicle track_id=1540 (total so far=12).
+2026-08-18 11:17:14,062 [INFO] [East] Counted unique vehicle track_id=1537 (total so far=13).
+2026-08-18 11:17:14,891 [INFO] [East] Counted unique vehicle track_id=1535 (total so far=14).
+2026-08-18 11:17:19,885 [INFO] [East] Counted unique vehicle track_id=1718 (total so far=15).
+2026-08-18 11:17:23,773 [INFO] [East] Counted unique vehicle track_id=1716 (total so far=16).
+2026-08-18 11:17:23,994 [INFO] [East] Analysis complete. frames_processed=382, unique_vehicles=16, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:17:24,079 [INFO] [West] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031746631-868089689.mp4
+2026-08-18 11:17:24,696 [INFO] [West] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 11:17:24,698 [INFO] [West] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 11:17:24,700 [INFO] [West] Counted unique vehicle track_id=14 (total so far=3).
+2026-08-18 11:17:24,701 [INFO] [West] Counted unique vehicle track_id=15 (total so far=4).
+2026-08-18 11:17:24,702 [INFO] [West] Counted unique vehicle track_id=16 (total so far=5).
+2026-08-18 11:17:25,163 [INFO] [West] Counted unique vehicle track_id=10 (total so far=6).
+2026-08-18 11:17:27,197 [INFO] [West] Counted unique vehicle track_id=11 (total so far=7).
+2026-08-18 11:17:31,475 [INFO] [West] Counted unique vehicle track_id=3 (total so far=8).
+2026-08-18 11:17:37,757 [INFO] [West] Counted unique vehicle track_id=5 (total so far=9).
+2026-08-18 11:17:41,064 [INFO] [West] Counted unique vehicle track_id=9 (total so far=10).
+2026-08-18 11:17:45,572 [INFO] [West] Counted unique vehicle track_id=8 (total so far=11).
+2026-08-18 11:17:51,869 [INFO] [West] Counted unique vehicle track_id=12 (total so far=12).
+2026-08-18 11:17:53,787 [INFO] [West] Counted unique vehicle track_id=6 (total so far=13).
+2026-08-18 11:17:59,387 [INFO] [West] Counted unique vehicle track_id=1866 (total so far=14).
+2026-08-18 11:17:59,388 [INFO] [West] Counted unique vehicle track_id=1867 (total so far=15).
+2026-08-18 11:17:59,389 [INFO] [West] Counted unique vehicle track_id=1868 (total so far=16).
+2026-08-18 11:17:59,389 [INFO] [West] Counted unique vehicle track_id=1873 (total so far=17).
+2026-08-18 11:17:59,390 [INFO] [West] Counted unique vehicle track_id=1876 (total so far=18).
+2026-08-18 11:17:59,390 [INFO] [West] Counted unique vehicle track_id=1878 (total so far=19).
+2026-08-18 11:17:59,526 [INFO] [West] Counted unique vehicle track_id=1870 (total so far=20).
+2026-08-18 11:18:00,132 [INFO] [West] Counted unique vehicle track_id=1874 (total so far=21).
+2026-08-18 11:18:01,311 [INFO] [West] Counted unique vehicle track_id=1869 (total so far=22).
+2026-08-18 11:18:05,192 [INFO] [West] Counted unique vehicle track_id=1875 (total so far=23).
+2026-08-18 11:18:08,228 [INFO] [West] Counted unique vehicle track_id=1877 (total so far=24).
+2026-08-18 11:18:11,545 [INFO] [West] Counted unique vehicle track_id=1880 (total so far=25).
+2026-08-18 11:18:18,034 [INFO] [West] Counted unique vehicle track_id=1872 (total so far=26).
+2026-08-18 11:18:25,245 [INFO] [West] Counted unique vehicle track_id=3023 (total so far=27).
+2026-08-18 11:18:25,248 [INFO] [West] Counted unique vehicle track_id=3024 (total so far=28).
+2026-08-18 11:18:25,249 [INFO] [West] Counted unique vehicle track_id=3027 (total so far=29).
+2026-08-18 11:18:25,251 [INFO] [West] Counted unique vehicle track_id=3029 (total so far=30).
+2026-08-18 11:18:28,787 [INFO] [West] Counted unique vehicle track_id=3025 (total so far=31).
+2026-08-18 11:18:29,509 [INFO] [West] Counted unique vehicle track_id=3028 (total so far=32).
+2026-08-18 11:18:35,661 [INFO] [West] Counted unique vehicle track_id=3026 (total so far=33).
+2026-08-18 11:18:39,409 [INFO] [West] Counted unique vehicle track_id=3031 (total so far=34).
+2026-08-18 11:18:40,782 [INFO] [West] Counted unique vehicle track_id=3030 (total so far=35).
+2026-08-18 11:18:43,723 [INFO] [West] Counted unique vehicle track_id=3032 (total so far=36).
+2026-08-18 11:18:54,204 [INFO] [West] Counted unique vehicle track_id=3033 (total so far=37).
+2026-08-18 11:19:09,153 [INFO] [West] Counted unique vehicle track_id=5388 (total so far=38).
+2026-08-18 11:19:09,154 [INFO] [West] Counted unique vehicle track_id=5389 (total so far=39).
+2026-08-18 11:19:09,155 [INFO] [West] Counted unique vehicle track_id=5390 (total so far=40).
+2026-08-18 11:19:09,156 [INFO] [West] Counted unique vehicle track_id=5391 (total so far=41).
+2026-08-18 11:19:09,156 [INFO] [West] Counted unique vehicle track_id=5392 (total so far=42).
+2026-08-18 11:19:09,876 [INFO] [West] Counted unique vehicle track_id=5395 (total so far=43).
+2026-08-18 11:19:11,140 [INFO] [West] Counted unique vehicle track_id=5398 (total so far=44).
+2026-08-18 11:19:13,209 [INFO] [West] Counted unique vehicle track_id=5393 (total so far=45).
+2026-08-18 11:19:14,500 [INFO] [West] Analysis complete. frames_processed=660, unique_vehicles=45, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:19:14,520 [INFO] Analysis complete. Results: {'North': {'count': 4, 'seconds': 15, 'emergency': False}, 'South': {'count': 0, 'seconds': 15, 'emergency': False}, 'East': {'count': 16, 'seconds': 19, 'emergency': False}, 'West': {'count': 45, 'seconds': 37, 'emergency': False}}
+2026-08-18 11:19:14,521 [INFO] 127.0.0.1 - - [18/Aug/2026 11:19:14] "POST /analyze HTTP/1.1" 200 -
+2026-08-18 11:19:31,626 [INFO] Received analyze request for 4 roads: ['North', 'South', 'East', 'West']
+2026-08-18 11:19:31,665 [INFO] [North] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031741586-230198292.mp4
+2026-08-18 11:19:32,781 [INFO] [North] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 11:19:34,266 [INFO] [North] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 11:19:44,705 [INFO] [North] Counted unique vehicle track_id=99 (total so far=3).
+2026-08-18 11:19:46,075 [INFO] [North] Counted unique vehicle track_id=97 (total so far=4).
+2026-08-18 11:19:54,158 [INFO] [North] Counted unique vehicle track_id=217 (total so far=5).
+2026-08-18 11:19:54,198 [INFO] [North] Counted unique vehicle track_id=218 (total so far=6).
+2026-08-18 11:20:01,569 [INFO] [North] Analysis complete. frames_processed=220, unique_vehicles=6, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:20:01,592 [INFO] [South] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031743241-413955104.mp4
+2026-08-18 11:20:57,224 [INFO] [South] Analysis complete. frames_processed=509, unique_vehicles=0, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:20:57,293 [INFO] [East] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031744935-673206687.mp4
+2026-08-18 11:20:58,608 [INFO] [East] Counted unique vehicle track_id=4 (total so far=1).
+2026-08-18 11:20:59,249 [INFO] [East] Counted unique vehicle track_id=1 (total so far=2).
+2026-08-18 11:21:00,276 [INFO] [East] Counted unique vehicle track_id=3 (total so far=3).
+2026-08-18 11:21:03,168 [INFO] [East] Counted unique vehicle track_id=178 (total so far=4).
+2026-08-18 11:21:03,180 [INFO] [East] Counted unique vehicle track_id=180 (total so far=5).
+2026-08-18 11:21:05,651 [INFO] [East] Counted unique vehicle track_id=175 (total so far=6).
+2026-08-18 11:21:09,933 [INFO] [East] Counted unique vehicle track_id=390 (total so far=7).
+2026-08-18 11:21:10,047 [INFO] [East] Counted unique vehicle track_id=389 (total so far=8).
+2026-08-18 11:21:11,978 [INFO] [East] Counted unique vehicle track_id=538 (total so far=9).
+2026-08-18 11:21:14,643 [INFO] [East] Counted unique vehicle track_id=539 (total so far=10).
+2026-08-18 11:21:15,484 [INFO] [East] Counted unique vehicle track_id=745 (total so far=11).
+2026-08-18 11:21:17,989 [INFO] [East] Counted unique vehicle track_id=748 (total so far=12).
+2026-08-18 11:21:20,090 [INFO] [East] Counted unique vehicle track_id=749 (total so far=13).
+2026-08-18 11:21:23,504 [INFO] [East] Counted unique vehicle track_id=1193 (total so far=14).
+2026-08-18 11:21:25,664 [INFO] [East] Counted unique vehicle track_id=1190 (total so far=15).
+2026-08-18 11:21:25,927 [INFO] [East] Counted unique vehicle track_id=1188 (total so far=16).
+2026-08-18 11:21:26,897 [INFO] [East] Counted unique vehicle track_id=1332 (total so far=17).
+2026-08-18 11:21:29,233 [INFO] [East] Counted unique vehicle track_id=1333 (total so far=18).
+2026-08-18 11:21:29,321 [INFO] [East] Analysis complete. frames_processed=382, unique_vehicles=18, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:21:29,368 [INFO] [West] Starting analysis: D:\aiprj\aiprj\backend\uploads\unknown-1787031746631-868089689.mp4
+2026-08-18 11:21:29,528 [INFO] [West] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 11:21:29,542 [INFO] [West] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 11:21:29,543 [INFO] [West] Counted unique vehicle track_id=14 (total so far=3).
+2026-08-18 11:21:29,543 [INFO] [West] Counted unique vehicle track_id=15 (total so far=4).
+2026-08-18 11:21:29,543 [INFO] [West] Counted unique vehicle track_id=16 (total so far=5).
+2026-08-18 11:21:29,703 [INFO] [West] Counted unique vehicle track_id=10 (total so far=6).
+2026-08-18 11:21:30,454 [INFO] [West] Counted unique vehicle track_id=11 (total so far=7).
+2026-08-18 11:21:31,785 [INFO] [West] Counted unique vehicle track_id=3 (total so far=8).
+2026-08-18 11:21:33,535 [INFO] [West] Counted unique vehicle track_id=5 (total so far=9).
+2026-08-18 11:21:35,126 [INFO] [West] Counted unique vehicle track_id=9 (total so far=10).
+2026-08-18 11:21:37,420 [INFO] [West] Counted unique vehicle track_id=8 (total so far=11).
+2026-08-18 11:21:41,758 [INFO] [West] Counted unique vehicle track_id=12 (total so far=12).
+2026-08-18 11:21:43,280 [INFO] [West] Counted unique vehicle track_id=6 (total so far=13).
+2026-08-18 11:21:52,459 [INFO] [West] Counted unique vehicle track_id=1867 (total so far=14).
+2026-08-18 11:21:52,460 [INFO] [West] Counted unique vehicle track_id=1868 (total so far=15).
+2026-08-18 11:21:52,460 [INFO] [West] Counted unique vehicle track_id=1869 (total so far=16).
+2026-08-18 11:21:52,461 [INFO] [West] Counted unique vehicle track_id=1874 (total so far=17).
+2026-08-18 11:21:52,461 [INFO] [West] Counted unique vehicle track_id=1877 (total so far=18).
+2026-08-18 11:21:52,462 [INFO] [West] Counted unique vehicle track_id=1879 (total so far=19).
+2026-08-18 11:21:52,664 [INFO] [West] Counted unique vehicle track_id=1871 (total so far=20).
+2026-08-18 11:21:53,521 [INFO] [West] Counted unique vehicle track_id=1875 (total so far=21).
+2026-08-18 11:21:55,570 [INFO] [West] Counted unique vehicle track_id=1870 (total so far=22).
+2026-08-18 11:22:00,444 [INFO] [West] Counted unique vehicle track_id=1876 (total so far=23).
+2026-08-18 11:22:01,447 [INFO] [West] Counted unique vehicle track_id=1878 (total so far=24).
+2026-08-18 11:22:02,587 [INFO] [West] Counted unique vehicle track_id=1881 (total so far=25).
+2026-08-18 11:22:04,560 [INFO] [West] Counted unique vehicle track_id=1873 (total so far=26).
+2026-08-18 11:22:06,859 [INFO] [West] Counted unique vehicle track_id=3024 (total so far=27).
+2026-08-18 11:22:06,865 [INFO] [West] Counted unique vehicle track_id=3025 (total so far=28).
+2026-08-18 11:22:06,865 [INFO] [West] Counted unique vehicle track_id=3028 (total so far=29).
+2026-08-18 11:22:06,866 [INFO] [West] Counted unique vehicle track_id=3030 (total so far=30).
+2026-08-18 11:22:08,165 [INFO] [West] Counted unique vehicle track_id=3026 (total so far=31).
+2026-08-18 11:22:08,386 [INFO] [West] Counted unique vehicle track_id=3029 (total so far=32).
+2026-08-18 11:22:10,125 [INFO] [West] Counted unique vehicle track_id=3027 (total so far=33).
+2026-08-18 11:22:11,516 [INFO] [West] Counted unique vehicle track_id=3032 (total so far=34).
+2026-08-18 11:22:11,969 [INFO] [West] Counted unique vehicle track_id=3031 (total so far=35).
+2026-08-18 11:22:12,915 [INFO] [West] Counted unique vehicle track_id=3033 (total so far=36).
+2026-08-18 11:22:16,014 [INFO] [West] Counted unique vehicle track_id=3034 (total so far=37).
+2026-08-18 11:22:20,180 [INFO] [West] Counted unique vehicle track_id=5388 (total so far=38).
+2026-08-18 11:22:20,181 [INFO] [West] Counted unique vehicle track_id=5389 (total so far=39).
+2026-08-18 11:22:20,181 [INFO] [West] Counted unique vehicle track_id=5390 (total so far=40).
+2026-08-18 11:22:20,181 [INFO] [West] Counted unique vehicle track_id=5391 (total so far=41).
+2026-08-18 11:22:20,182 [INFO] [West] Counted unique vehicle track_id=5392 (total so far=42).
+2026-08-18 11:22:20,705 [INFO] [West] Counted unique vehicle track_id=5395 (total so far=43).
+2026-08-18 11:22:21,661 [INFO] [West] Counted unique vehicle track_id=5398 (total so far=44).
+2026-08-18 11:22:23,784 [INFO] [West] Counted unique vehicle track_id=5393 (total so far=45).
+2026-08-18 11:22:24,779 [INFO] [West] Analysis complete. frames_processed=660, unique_vehicles=45, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:22:24,796 [INFO] Analysis complete. Results: {'North': {'count': 6, 'seconds': 15, 'emergency': False}, 'South': {'count': 0, 'seconds': 15, 'emergency': False}, 'East': {'count': 18, 'seconds': 20, 'emergency': False}, 'West': {'count': 45, 'seconds': 37, 'emergency': False}}
+2026-08-18 11:22:24,797 [INFO] 127.0.0.1 - - [18/Aug/2026 11:22:24] "POST /analyze HTTP/1.1" 200 -
+2026-08-18 11:24:17,164 [INFO] Received analyze request for 4 roads: ['North', 'South', 'East', 'West']
+2026-08-18 11:24:17,165 [INFO] [North] Starting analysis: D:/aiprj/aiprj/backend/uploads/unknown-1787031741586-230198292.mp4
+2026-08-18 11:24:17,703 [INFO] [North] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 11:24:18,147 [INFO] [North] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 11:24:21,231 [INFO] [North] Counted unique vehicle track_id=99 (total so far=3).
+2026-08-18 11:24:21,671 [INFO] [North] Counted unique vehicle track_id=97 (total so far=4).
+2026-08-18 11:24:24,062 [INFO] [North] Counted unique vehicle track_id=217 (total so far=5).
+2026-08-18 11:24:24,067 [INFO] [North] Counted unique vehicle track_id=218 (total so far=6).
+2026-08-18 11:24:29,745 [INFO] [North] Analysis complete. frames_processed=220, unique_vehicles=6, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:24:29,768 [INFO] [South] Starting analysis: D:/aiprj/aiprj/backend/uploads/unknown-1787031743241-413955104.mp4
+2026-08-18 11:25:03,336 [INFO] [South] Analysis complete. frames_processed=509, unique_vehicles=0, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:25:03,397 [INFO] [East] Starting analysis: D:/aiprj/aiprj/backend/uploads/unknown-1787031744935-673206687.mp4
+2026-08-18 11:25:04,746 [INFO] [East] Counted unique vehicle track_id=4 (total so far=1).
+2026-08-18 11:25:05,276 [INFO] [East] Counted unique vehicle track_id=1 (total so far=2).
+2026-08-18 11:25:06,210 [INFO] [East] Counted unique vehicle track_id=3 (total so far=3).
+2026-08-18 11:25:08,959 [INFO] [East] Counted unique vehicle track_id=178 (total so far=4).
+2026-08-18 11:25:08,966 [INFO] [East] Counted unique vehicle track_id=180 (total so far=5).
+2026-08-18 11:25:11,731 [INFO] [East] Counted unique vehicle track_id=175 (total so far=6).
+2026-08-18 11:25:16,487 [INFO] [East] Counted unique vehicle track_id=390 (total so far=7).
+2026-08-18 11:25:16,588 [INFO] [East] Counted unique vehicle track_id=389 (total so far=8).
+2026-08-18 11:25:18,750 [INFO] [East] Counted unique vehicle track_id=538 (total so far=9).
+2026-08-18 11:25:21,579 [INFO] [East] Counted unique vehicle track_id=539 (total so far=10).
+2026-08-18 11:25:22,473 [INFO] [East] Counted unique vehicle track_id=745 (total so far=11).
+2026-08-18 11:25:25,210 [INFO] [East] Counted unique vehicle track_id=748 (total so far=12).
+2026-08-18 11:25:27,459 [INFO] [East] Counted unique vehicle track_id=749 (total so far=13).
+2026-08-18 11:25:31,012 [INFO] [East] Counted unique vehicle track_id=1193 (total so far=14).
+2026-08-18 11:25:33,355 [INFO] [East] Counted unique vehicle track_id=1190 (total so far=15).
+2026-08-18 11:25:33,624 [INFO] [East] Counted unique vehicle track_id=1188 (total so far=16).
+2026-08-18 11:25:34,600 [INFO] [East] Counted unique vehicle track_id=1332 (total so far=17).
+2026-08-18 11:25:36,984 [INFO] [East] Counted unique vehicle track_id=1333 (total so far=18).
+2026-08-18 11:25:37,065 [INFO] [East] Analysis complete. frames_processed=382, unique_vehicles=18, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:25:37,110 [INFO] [West] Starting analysis: D:/aiprj/aiprj/backend/uploads/unknown-1787031746631-868089689.mp4
+2026-08-18 11:25:37,269 [INFO] [West] Counted unique vehicle track_id=1 (total so far=1).
+2026-08-18 11:25:37,272 [INFO] [West] Counted unique vehicle track_id=2 (total so far=2).
+2026-08-18 11:25:37,274 [INFO] [West] Counted unique vehicle track_id=14 (total so far=3).
+2026-08-18 11:25:37,276 [INFO] [West] Counted unique vehicle track_id=15 (total so far=4).
+2026-08-18 11:25:37,276 [INFO] [West] Counted unique vehicle track_id=16 (total so far=5).
+2026-08-18 11:25:37,433 [INFO] [West] Counted unique vehicle track_id=10 (total so far=6).
+2026-08-18 11:25:38,285 [INFO] [West] Counted unique vehicle track_id=11 (total so far=7).
+2026-08-18 11:25:39,713 [INFO] [West] Counted unique vehicle track_id=3 (total so far=8).
+2026-08-18 11:25:41,527 [INFO] [West] Counted unique vehicle track_id=5 (total so far=9).
+2026-08-18 11:25:42,485 [INFO] [West] Counted unique vehicle track_id=9 (total so far=10).
+2026-08-18 11:25:43,635 [INFO] [West] Counted unique vehicle track_id=8 (total so far=11).
+2026-08-18 11:25:46,036 [INFO] [West] Counted unique vehicle track_id=12 (total so far=12).
+2026-08-18 11:25:47,213 [INFO] [West] Counted unique vehicle track_id=6 (total so far=13).
+2026-08-18 11:25:52,063 [INFO] [West] Counted unique vehicle track_id=1867 (total so far=14).
+2026-08-18 11:25:52,070 [INFO] [West] Counted unique vehicle track_id=1868 (total so far=15).
+2026-08-18 11:25:52,071 [INFO] [West] Counted unique vehicle track_id=1869 (total so far=16).
+2026-08-18 11:25:52,072 [INFO] [West] Counted unique vehicle track_id=1874 (total so far=17).
+2026-08-18 11:25:52,072 [INFO] [West] Counted unique vehicle track_id=1877 (total so far=18).
+2026-08-18 11:25:52,072 [INFO] [West] Counted unique vehicle track_id=1879 (total so far=19).
+2026-08-18 11:25:52,162 [INFO] [West] Counted unique vehicle track_id=1871 (total so far=20).
+2026-08-18 11:25:52,706 [INFO] [West] Counted unique vehicle track_id=1875 (total so far=21).
+2026-08-18 11:25:53,907 [INFO] [West] Counted unique vehicle track_id=1870 (total so far=22).
+2026-08-18 11:25:57,541 [INFO] [West] Counted unique vehicle track_id=1876 (total so far=23).
+2026-08-18 11:25:58,783 [INFO] [West] Counted unique vehicle track_id=1878 (total so far=24).
+2026-08-18 11:26:00,073 [INFO] [West] Counted unique vehicle track_id=1881 (total so far=25).
+2026-08-18 11:26:02,463 [INFO] [West] Counted unique vehicle track_id=1873 (total so far=26).
+2026-08-18 11:26:04,850 [INFO] [West] Counted unique vehicle track_id=3023 (total so far=27).
+2026-08-18 11:26:04,855 [INFO] [West] Counted unique vehicle track_id=3024 (total so far=28).
+2026-08-18 11:26:04,856 [INFO] [West] Counted unique vehicle track_id=3027 (total so far=29).
+2026-08-18 11:26:04,856 [INFO] [West] Counted unique vehicle track_id=3029 (total so far=30).
+2026-08-18 11:26:06,200 [INFO] [West] Counted unique vehicle track_id=3025 (total so far=31).
+2026-08-18 11:26:06,435 [INFO] [West] Counted unique vehicle track_id=3028 (total so far=32).
+2026-08-18 11:26:08,341 [INFO] [West] Counted unique vehicle track_id=3026 (total so far=33).
+2026-08-18 11:26:09,633 [INFO] [West] Counted unique vehicle track_id=3031 (total so far=34).
+2026-08-18 11:26:10,150 [INFO] [West] Counted unique vehicle track_id=3030 (total so far=35).
+2026-08-18 11:26:11,254 [INFO] [West] Counted unique vehicle track_id=3032 (total so far=36).
+2026-08-18 11:26:14,931 [INFO] [West] Counted unique vehicle track_id=3033 (total so far=37).
+2026-08-18 11:26:19,514 [INFO] [West] Counted unique vehicle track_id=5387 (total so far=38).
+2026-08-18 11:26:19,519 [INFO] [West] Counted unique vehicle track_id=5388 (total so far=39).
+2026-08-18 11:26:19,521 [INFO] [West] Counted unique vehicle track_id=5389 (total so far=40).
+2026-08-18 11:26:19,521 [INFO] [West] Counted unique vehicle track_id=5390 (total so far=41).
+2026-08-18 11:26:19,522 [INFO] [West] Counted unique vehicle track_id=5391 (total so far=42).
+2026-08-18 11:26:20,076 [INFO] [West] Counted unique vehicle track_id=5394 (total so far=43).
+2026-08-18 11:26:20,961 [INFO] [West] Counted unique vehicle track_id=5397 (total so far=44).
+2026-08-18 11:26:23,169 [INFO] [West] Counted unique vehicle track_id=5392 (total so far=45).
+2026-08-18 11:26:24,472 [INFO] [West] Analysis complete. frames_processed=660, unique_vehicles=45, confirmed_ambulances=0, emergency=False, tracking_supported=True.
+2026-08-18 11:26:24,494 [INFO] Analysis complete. Results: {'North': {'count': 6, 'seconds': 15, 'emergency': False}, 'South': {'count': 0, 'seconds': 15, 'emergency': False}, 'East': {'count': 18, 'seconds': 20, 'emergency': False}, 'West': {'count': 45, 'seconds': 37, 'emergency': False}}
+2026-08-18 11:26:24,495 [INFO] 127.0.0.1 - - [18/Aug/2026 11:26:24] "POST /analyze HTTP/1.1" 200 -
