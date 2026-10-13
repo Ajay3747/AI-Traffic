@@ -38,11 +38,6 @@ export const analyzeTraffic = async (videos) => {
   return response.data;
 };
 
-export const analyzeWebcamFrame = async (image, road) => {
-  const response = await api.post('/analyze-frame', { image, road });
-  return response.data;
-};
-
 export const startSignalCycle = async (counts, direction) => {
   const response = await api.post('/signal/start', { counts, direction });
   return response.data;
@@ -61,7 +56,6 @@ export const resetSignalCycle = async () => {
 export default {
   uploadVideo,
   analyzeTraffic,
-  analyzeWebcamFrame,
   startSignalCycle,
   getSignalStatus,
   resetSignalCycle,

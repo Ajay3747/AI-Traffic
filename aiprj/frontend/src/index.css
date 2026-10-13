@@ -8,6 +8,13 @@
   }
 }
 
+/* Fine dot-grid texture for a control-room feel behind the dashboard.
+   Kept very low-opacity so it reads as texture, not decoration. */
+.ops-grid-bg {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
 /* Glassmorphism utility classes */
 .glass-panel {
   background: rgba(13, 17, 30, 0.7);

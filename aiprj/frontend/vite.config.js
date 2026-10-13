@@ -13,5 +13,16 @@ export default defineConfig({
   server: {
     https: true,
     host: true,
+    // Forward /api to the Express backend's plain-HTTP listener (5001).
+    // This proxying happens server-to-server (Vite -> Express on the same
+    // machine), so it never touches the backend's self-signed HTTPS cert
+    // at all -- the phone only ever has to trust ONE cert (this dev
+    // server's, on 5173) instead of two.
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+      },
+    },
   },
 })

@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Upload, Clock, CheckCircle,
-  RefreshCw, Activity, Video, ShieldAlert, Check, Camera, CameraOff
+  RefreshCw, Activity, Video, ShieldAlert, Check
 } from 'lucide-react';
-import { uploadVideo, analyzeTraffic, analyzeWebcamFrame, startSignalCycle, getSignalStatus, resetSignalCycle } from './services/api';
-
-// How often a frame is grabbed from the laptop camera and sent to the AI
-// backend while the live camera panel is active.
-const CAMERA_CAPTURE_INTERVAL_MS = 2000;
+import { uploadVideo, analyzeTraffic, startSignalCycle, getSignalStatus, resetSignalCycle } from './services/api';
 
 const ROADS = ['North', 'South', 'East', 'West'];
 // Matches YELLOW_WARNING_SECONDS in the ESP32 firmware so the simulator UI
@@ -57,26 +53,13 @@ export default function App() {
   // matching YELLOW_WARNING_SECONDS in the ESP32 firmware.
   const isYellowPhase = isSimulating && timerRemaining > 0 && timerRemaining <= YELLOW_WARNING_SECONDS;
 
-  // Live laptop-camera test panel state (independent of the 4 video upload
-  // cards -- sends periodic frames to /api/analyze-frame for one road at a
-  // time, useful for quick demos without pre-recorded video files).
-  const [cameraActive, setCameraActive] = useState(false);
-  const [cameraStarting, setCameraStarting] = useState(false);
-  const [cameraRoad, setCameraRoad] = useState('North');
-  const [cameraResult, setCameraResult] = useState(null); // { count, seconds, emergency }
-  const [cameraError, setCameraError] = useState(null);
-
-  const cameraVideoRef = useRef(null);
-  const cameraCanvasRef = useRef(null);
-  const cameraStreamRef = useRef(null);
-  const cameraIntervalRef = useRef(null);
-  // Read inside the capture interval instead of the `cameraRoad` state
-  // directly, so switching roads mid-stream doesn't hit a stale closure.
-  const cameraRoadRef = useRef(cameraRoad);
-
+  // Live wall-clock display in the header -- purely cosmetic (no backend
+  // call), just ticks locally so the dashboard reads as a real-time console.
+  const [clockNow, setClockNow] = useState(new Date());
   useEffect(() => {
-    cameraRoadRef.current = cameraRoad;
-  }, [cameraRoad]);
+    const t = setInterval(() => setClockNow(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
 
   // File input refs
   const fileInputRefs = {
@@ -86,13 +69,21 @@ export default function App() {
     West: useRef(null),
   };
 
-  // Video element refs for synchronized playback
-  const videoRefs = {
-    North: useRef(null),
-    South: useRef(null),
-    East: useRef(null),
-    West: useRef(null),
-  };
+  // Video element refs for synchronized playback. Each useRef must be
+  // called at the top level (not inside useMemo) per Rules of Hooks, but
+  // the lookup object wrapping them is memoized so its identity stays
+  // stable across renders -- otherwise the auto-play effect below would
+  // need to either re-run on every render or lie about its dependencies.
+  const videoRefNorth = useRef(null);
+  const videoRefSouth = useRef(null);
+  const videoRefEast = useRef(null);
+  const videoRefWest = useRef(null);
+  const videoRefs = useMemo(() => ({
+    North: videoRefNorth,
+    South: videoRefSouth,
+    East: videoRefEast,
+    West: videoRefWest,
+  }), []);
 
   // Handle file selection
   const handleFileChange = async (road, file) => {
@@ -166,71 +157,6 @@ export default function App() {
     }
   };
 
-  // Grabs the current frame from the live camera <video> element and sends
-  // it to the AI backend for the currently-selected road.
-  const captureAndAnalyzeCameraFrame = async () => {
-    const video = cameraVideoRef.current;
-    const canvas = cameraCanvasRef.current;
-    if (!video || !canvas || video.readyState < 2) return;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-    const frameDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-
-    try {
-      const response = await analyzeWebcamFrame(frameDataUrl, cameraRoadRef.current);
-      if (response.success) {
-        setCameraResult(response.data);
-        setCameraError(null);
-      } else {
-        setCameraError(response.message || 'Live analysis failed.');
-      }
-    } catch (err) {
-      setCameraError(err.response?.data?.message || err.message || 'Could not reach the AI backend.');
-    }
-  };
-
-  const stopCamera = () => {
-    if (cameraIntervalRef.current) {
-      clearInterval(cameraIntervalRef.current);
-      cameraIntervalRef.current = null;
-    }
-    if (cameraStreamRef.current) {
-      cameraStreamRef.current.getTracks().forEach(track => track.stop());
-      cameraStreamRef.current = null;
-    }
-    if (cameraVideoRef.current) {
-      cameraVideoRef.current.srcObject = null;
-    }
-    setCameraActive(false);
-  };
-
-  const startCamera = async () => {
-    setCameraError(null);
-    setCameraStarting(true);
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-      cameraStreamRef.current = stream;
-      if (cameraVideoRef.current) {
-        cameraVideoRef.current.srcObject = stream;
-      }
-      setCameraActive(true);
-      setCameraResult(null);
-      cameraIntervalRef.current = setInterval(captureAndAnalyzeCameraFrame, CAMERA_CAPTURE_INTERVAL_MS);
-    } catch (err) {
-      setCameraError(err.message || 'Could not access the laptop camera. Check browser permissions.');
-    } finally {
-      setCameraStarting(false);
-    }
-  };
-
-  // Make sure the camera stream/interval never keeps running after the
-  // component unmounts (e.g. navigating away mid-stream).
-  useEffect(() => {
-    return () => stopCamera();
-  }, []);
-
   // Auto-play videos during active state
   useEffect(() => {
     ROADS.forEach(road => {
@@ -243,7 +169,7 @@ export default function App() {
         }
       }
     });
-  }, [activeRoad, isSimulating]);
+  }, [activeRoad, isSimulating, videoRefs]);
 
   // Start traffic analysis
   const handleAnalyze = async () => {
@@ -439,7 +365,7 @@ export default function App() {
   const allUploaded = ROADS.every(road => videoData[road].serverPath);
 
   return (
-    <div className="min-h-screen bg-[#070a13] bg-radial-[circle_at_center,_var(--tw-gradient-stops)] from-[#0f172a] via-[#070a13] to-[#030712] py-8 px-4 sm:px-6 lg:px-8 text-slate-200">
+    <div className="min-h-screen ops-grid-bg bg-[#070a13] bg-radial-[circle_at_center,_var(--tw-gradient-stops)] from-[#0f172a] via-[#070a13] to-[#030712] py-8 px-4 sm:px-6 lg:px-8 text-slate-200">
       
       {/* 1. Header Area */}
       <header className="max-w-7xl mx-auto mb-8 flex flex-col md:flex-row items-center justify-between border-b border-slate-800/60 pb-6">
@@ -457,15 +383,22 @@ export default function App() {
           </div>
         </div>
 
-        {/* Live HUD Status badge */}
-        <div className="flex items-center space-x-3 bg-slate-900/60 border border-slate-800/80 rounded-full px-4 py-2 text-xs">
-          <span className="relative flex h-2 w-2">
-            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isSimulating ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
-            <span className={`relative inline-flex rounded-full h-2 w-2 ${isSimulating ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
-          </span>
-          <span className="font-mono text-slate-300">
-            SYSTEM STATUS: {isSimulating ? 'SIMULATION ACTIVE' : 'AWAITING UPLOADS'}
-          </span>
+        {/* Live HUD Status */}
+        <div className="flex flex-col items-end space-y-2">
+          <div className="flex items-center space-x-3 bg-slate-900/60 border border-slate-800/80 rounded-full px-4 py-2 text-xs">
+            <span className="relative flex h-2 w-2">
+              <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isSimulating ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
+              <span className={`relative inline-flex rounded-full h-2 w-2 ${isSimulating ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
+            </span>
+            <span className="font-mono text-slate-300">
+              SYSTEM STATUS: {isSimulating ? 'SIMULATION ACTIVE' : 'AWAITING UPLOADS'}
+            </span>
+          </div>
+          <div className="flex items-center space-x-2 px-1 text-[11px] font-mono text-slate-500 tabular-nums">
+            <span className="text-slate-600">{clockNow.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+            <span className="h-1 w-1 rounded-full bg-slate-700" />
+            <span className="text-slate-400">{clockNow.toLocaleTimeString(undefined, { hour12: false })}</span>
+          </div>
         </div>
       </header>
 
@@ -505,16 +438,35 @@ export default function App() {
                       : 'hover:border-slate-700/60 hover:bg-slate-900/30'
                   }`}
                 >
-                  {/* Card Title & Indicator */}
+                  {/* Card Direction & Status Indicator */}
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-sm text-slate-200">{ROAD_LABELS[road]}</span>
-                    
+                    <span className="text-xs font-bold text-slate-300 tracking-widest uppercase">{road}</span>
+
                     {/* Tiny Status Dot */}
-                    <span className="flex items-center space-x-1.5 text-[11px] font-medium font-mono">
-                      {isProcessing && <span className="text-blue-400 animate-pulse">Uploading...</span>}
-                      {isSuccess && !vehicleCounts && <span className="text-emerald-400 flex items-center"><Check className="h-3 w-3 mr-0.5" /> Ready</span>}
-                      {isError && <span className="text-rose-400 flex items-center">Error</span>}
-                      {data.status === 'idle' && <span className="text-slate-500">Empty</span>}
+                    <span className="flex items-center space-x-1.5 text-[10px] font-semibold font-mono tracking-wider uppercase">
+                      {isProcessing && (
+                        <span className="text-blue-400 flex items-center space-x-1.5">
+                          <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
+                          <span>Uploading</span>
+                        </span>
+                      )}
+                      {isSuccess && !vehicleCounts && (
+                        <span className="text-emerald-400 flex items-center space-x-1">
+                          <Check className="h-3 w-3" /> <span>Ready</span>
+                        </span>
+                      )}
+                      {isError && (
+                        <span className="text-rose-400 flex items-center space-x-1.5">
+                          <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
+                          <span>Error</span>
+                        </span>
+                      )}
+                      {data.status === 'idle' && (
+                        <span className="text-slate-500 flex items-center space-x-1.5">
+                          <span className="h-1.5 w-1.5 rounded-full bg-slate-700" />
+                          <span>Standby</span>
+                        </span>
+                      )}
                     </span>
                   </div>
 
@@ -603,110 +555,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* 2b. Live Laptop Camera Test Panel */}
-        <section className="glass-panel rounded-2xl p-5 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-lg font-semibold text-white flex items-center space-x-2">
-              <Camera className="h-5 w-5 text-blue-400" />
-              <span>Live Camera Feed (Laptop Webcam)</span>
-            </h2>
-            <span className="text-xs text-slate-400">
-              Point your laptop camera at traffic and test detection live, without uploading a video file.
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-5">
-            {/* Camera preview */}
-            <div className="relative w-full aspect-video lg:aspect-auto lg:h-[210px] rounded-xl overflow-hidden bg-slate-950/80 border border-slate-800/80 flex items-center justify-center">
-              <video
-                ref={cameraVideoRef}
-                autoPlay
-                muted
-                playsInline
-                className={`w-full h-full object-cover ${cameraActive ? '' : 'hidden'}`}
-              />
-              <canvas ref={cameraCanvasRef} className="hidden" />
-              {!cameraActive && (
-                <div className="flex flex-col items-center text-center p-4 text-slate-500">
-                  <CameraOff className="h-6 w-6 mb-2" />
-                  <span className="text-xs font-semibold">Camera is off</span>
-                </div>
-              )}
-              {cameraActive && (
-                <span className="absolute top-2 left-2 flex items-center space-x-1.5 bg-slate-950/80 border border-slate-800 rounded-full px-2 py-0.5">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500"></span>
-                  </span>
-                  <span className="text-[10px] font-mono text-slate-300">LIVE</span>
-                </span>
-              )}
-            </div>
-
-            {/* Controls + live result */}
-            <div className="flex flex-col justify-between space-y-4">
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs font-semibold text-slate-400">Road:</span>
-                  <select
-                    value={cameraRoad}
-                    onChange={(e) => setCameraRoad(e.target.value)}
-                    className="glass-input text-xs rounded-lg px-2.5 py-1.5"
-                  >
-                    {ROADS.map(road => (
-                      <option key={road} value={road}>{ROAD_LABELS[road]}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {!cameraActive ? (
-                  <button
-                    onClick={startCamera}
-                    disabled={cameraStarting}
-                    className="px-4 py-1.5 rounded-lg font-semibold text-xs flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Camera className="h-3.5 w-3.5" />
-                    <span>{cameraStarting ? 'Starting...' : 'Start Camera'}</span>
-                  </button>
-                ) : (
-                  <button
-                    onClick={stopCamera}
-                    className="px-4 py-1.5 rounded-lg font-semibold text-xs flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all duration-300"
-                  >
-                    <CameraOff className="h-3.5 w-3.5" />
-                    <span>Stop Camera</span>
-                  </button>
-                )}
-              </div>
-
-              {cameraError && (
-                <div className="p-2.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-400 text-[11px]">
-                  {cameraError}
-                </div>
-              )}
-
-              {cameraResult && (
-                <div className={`p-3 rounded-xl border flex items-center justify-between text-xs font-mono ${
-                  cameraResult.emergency
-                    ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                    : 'bg-slate-900/60 border-slate-800 text-slate-300'
-                }`}>
-                  <span>Vehicles: <strong className="text-white">{cameraResult.count}</strong></span>
-                  <span>Green: <strong className="text-white">{cameraResult.seconds}s</strong></span>
-                  <span className="flex items-center space-x-1">
-                    {cameraResult.emergency && <ShieldAlert className="h-3.5 w-3.5" />}
-                    <span>{cameraResult.emergency ? 'AMBULANCE DETECTED' : 'Normal'}</span>
-                  </span>
-                </div>
-              )}
-
-              <p className="text-[10px] text-slate-500">
-                A frame is captured and analyzed roughly every {CAMERA_CAPTURE_INTERVAL_MS / 1000}s while the camera is on. This is a live testing tool and is independent of the 4 uploaded video feeds above.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* 3. Action Panel & Workflow Animations */}
         <section className="glass-panel rounded-2xl p-6 relative overflow-hidden flex flex-col items-center justify-center text-center">
           
@@ -716,7 +564,22 @@ export default function App() {
               <p className="text-sm text-slate-400 leading-relaxed">
                 When all 4 cameras are active, the AI engine will parse the video streams using a pre-trained YOLOv8 convolutional neural network to count vehicles in each direction and compute smart light durations.
               </p>
-              
+
+              {/* Feed readiness indicator */}
+              <div className="flex items-center justify-center space-x-2 pt-1 pb-1">
+                {ROADS.map(road => (
+                  <span
+                    key={road}
+                    className={`h-1.5 w-6 rounded-full transition-colors duration-300 ${
+                      videoData[road].serverPath ? 'bg-emerald-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-slate-800'
+                    }`}
+                  />
+                ))}
+                <span className="text-[11px] font-mono text-slate-500 pl-1 tabular-nums">
+                  {ROADS.filter(road => videoData[road].serverPath).length}/4 FEEDS READY
+                </span>
+              </div>
+
               <button
                 onClick={handleAnalyze}
                 disabled={!allUploaded}
@@ -1014,9 +877,9 @@ export default function App() {
                     {/* ROAD LIGHT NODES */}
                     
                     {/* NORTH LIGHT */}
-                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10">
+                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10">
                       <div className="text-[10px] font-bold text-slate-500 mb-1">NORTH</div>
-                      <div className="w-7 h-24 rounded-full bg-slate-900 border border-slate-800 flex flex-col items-center justify-around py-1 shadow-md">
+                      <div className="w-7 h-16 rounded-full bg-slate-900 border border-slate-800 flex flex-col items-center justify-around py-1 shadow-md">
                         {/* Red Node */}
                         <div className={`w-4.5 h-4.5 rounded-full transition-all duration-300 ${
                           activeRoad === 'North'
@@ -1039,9 +902,9 @@ export default function App() {
                     </div>
 
                     {/* SOUTH LIGHT */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col-reverse items-center z-10">
+                    <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex flex-col-reverse items-center z-10">
                       <div className="text-[10px] font-bold text-slate-500 mt-1">SOUTH</div>
-                      <div className="w-7 h-24 rounded-full bg-slate-900 border border-slate-800 flex flex-col items-center justify-around py-1 shadow-md">
+                      <div className="w-7 h-16 rounded-full bg-slate-900 border border-slate-800 flex flex-col items-center justify-around py-1 shadow-md">
                         {/* Green Node */}
                         <div className={`w-4.5 h-4.5 rounded-full transition-all duration-300 ${
                           activeRoad === 'South' && !isYellowPhase
@@ -1064,8 +927,8 @@ export default function App() {
                     </div>
 
                     {/* EAST LIGHT */}
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-1.5 z-10">
-                      <div className="w-24 h-7 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-around px-1 shadow-md">
+                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1.5 z-10">
+                      <div className="w-16 h-7 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-around px-1 shadow-md">
                         {/* Red Node */}
                         <div className={`w-4.5 h-4.5 rounded-full transition-all duration-300 ${
                           activeRoad === 'East'
@@ -1089,9 +952,9 @@ export default function App() {
                     </div>
 
                     {/* WEST LIGHT */}
-                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-1.5 z-10">
+                    <div className="absolute left-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1.5 z-10">
                       <div className="text-[10px] font-bold text-slate-500">WEST</div>
-                      <div className="w-24 h-7 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-around px-1 shadow-md">
+                      <div className="w-16 h-7 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-around px-1 shadow-md">
                         {/* Green Node */}
                         <div className={`w-4.5 h-4.5 rounded-full transition-all duration-300 ${
                           activeRoad === 'West' && !isYellowPhase

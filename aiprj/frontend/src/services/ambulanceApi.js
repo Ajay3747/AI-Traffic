@@ -14,13 +14,14 @@ export const startEmergency = async (ambulanceId) => {
   return response.data;
 };
 
-export const sendLocation = async ({ ambulanceId, latitude, longitude, accuracy, emergency }) => {
+export const sendLocation = async ({ ambulanceId, latitude, longitude, accuracy, heading, speed }) => {
   const response = await api.post('/ambulance/location', {
     ambulanceId,
     latitude,
     longitude,
     accuracy,
-    emergency,
+    heading,
+    speed,
   });
   return response.data;
 };
@@ -35,4 +36,39 @@ export const getAmbulanceStatus = async () => {
   return response.data;
 };
 
-export default { startEmergency, sendLocation, stopEmergency, getAmbulanceStatus };
+export const setTrafficDirection = async (direction) => {
+  const response = await api.post('/emergency/test', { direction });
+  return response.data;
+};
+
+export const clearTrafficDirection = async () => {
+  const response = await api.post('/emergency/clear');
+  return response.data;
+};
+
+export const setAdminTrafficDirection = async (direction) => {
+  const response = await api.post('/admin/signal/override', { direction });
+  return response.data;
+};
+
+export const clearAdminTrafficDirection = async () => {
+  const response = await api.post('/admin/signal/clear');
+  return response.data;
+};
+
+export const setAdminAllRed = async () => {
+  const response = await api.post('/admin/signal/all-red');
+  return response.data;
+};
+
+export default {
+  startEmergency,
+  sendLocation,
+  stopEmergency,
+  getAmbulanceStatus,
+  setTrafficDirection,
+  clearTrafficDirection,
+  setAdminTrafficDirection,
+  clearAdminTrafficDirection,
+  setAdminAllRed,
+};

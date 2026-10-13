@@ -30,57 +30,12 @@
  *   GPIO2
  *
  * ================================================================
- *
- * TRAFFIC LOGIC
- *
- * If NORTH is active:
- *
- *   NORTH = GREEN
- *   SOUTH = RED
- *   EAST  = RED
- *   WEST  = RED
- *
- * If SOUTH is active:
- *
- *   NORTH = RED
- *   SOUTH = GREEN
- *   EAST  = RED
- *   WEST  = RED
- *
- * If EAST is active:
- *
- *   NORTH = RED
- *   SOUTH = RED
- *   EAST  = GREEN
- *   WEST  = RED
- *
- * If WEST is active:
- *
- *   NORTH = RED
- *   SOUTH = RED
- *   EAST  = RED
- *   WEST  = GREEN
- *
- * Last 3 seconds:
- *
- *   ACTIVE ROAD = YELLOW
- *   OTHER ROADS = RED
- *
- * Emergency:
- *
- *   EMERGENCY ROAD = GREEN
- *   OTHER ROADS    = RED
- *
- * Backend unavailable for 5 seconds:
- *
- *   ALL ROADS = RED
- *
- * ================================================================
  */
 
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
+#include <cstring>
 
 
 // ================================================================
@@ -96,55 +51,40 @@ const char* WIFI_PASSWORD = "Ajay#123";
 // ================================================================
 //
 // IMPORTANT:
+// Replace this IP if your laptop gets a different IP address.
 //
-// Your laptop is now connected to a NEW Wi-Fi.
-//
-// Therefore 192.168.31.49 may no longer be correct.
-//
-// Run this on your laptop:
-//
+// Run on laptop:
 //     ipconfig
 //
-// Find:
-//
-//     Wireless LAN adapter Wi-Fi
-//     IPv4 Address
-//
 // Example:
-//
-//     IPv4 Address : 192.168.43.123
-//
-// Then change SERVER_HOST to:
-//
-//     192.168.43.123:5001
+//     IPv4 Address : 10.93.224.165
 //
 // ================================================================
 
 const char* SERVER_HOST = "10.93.224.165:5001";
 
-
-// Express endpoint
 const char* SIGNAL_ENDPOINT =
   "/api/signal/status";
 
 
 // ================================================================
-// 3. TIMING
+// 3. TIMING CONFIGURATION
 // ================================================================
 
-// Ask Express for the current signal state every second
+// Poll backend every 1 second
 const unsigned long POLL_INTERVAL_MS = 1000;
 
-// HTTP timeout
-const unsigned long HTTP_TIMEOUT_MS = 3000;
+// Maximum time for one HTTP request
+const unsigned long HTTP_TIMEOUT_MS = 1500;
 
-// If backend is unavailable for 5 seconds -> ALL RED
-const unsigned long BACKEND_FAILSAFE_MS = 5000;
+// If backend does not respond successfully for 10 seconds,
+// all traffic lights become RED
+const unsigned long BACKEND_FAILSAFE_MS = 10000;
 
-// Last 3 seconds of green -> YELLOW
+// Last 3 seconds of green -> yellow
 const int YELLOW_WARNING_SECONDS = 3;
 
-// Wi-Fi reconnect interval
+// WiFi reconnect interval
 const unsigned long WIFI_RECONNECT_INTERVAL_MS = 5000;
 
 
@@ -208,6 +148,10 @@ unsigned long lastSuccessfulBackendResponse = 0;
 bool backendConnected = false;
 
 
+// Failsafe status
+bool failsafeActive = false;
+
+
 // Backend simulation state
 bool simulationRunning = false;
 
@@ -216,7 +160,7 @@ bool simulationFinished = false;
 bool emergency = false;
 
 
-// Current active road from backend
+// Current active road
 String activeRoad = "";
 
 
@@ -273,23 +217,17 @@ void setup() {
   // --------------------------------------------------------------
 
   Serial.print("Firmware build: ");
-
   Serial.print(__DATE__);
-
   Serial.print(" ");
-
   Serial.println(__TIME__);
 
 
   Serial.print("WiFi SSID: ");
-
   Serial.println(WIFI_SSID);
 
 
   Serial.print("Backend: http://");
-
   Serial.print(SERVER_HOST);
-
   Serial.println(SIGNAL_ENDPOINT);
 
 
@@ -297,7 +235,7 @@ void setup() {
 
 
   // ==============================================================
-  // CONFIGURE ALL TRAFFIC LIGHT PINS
+  // CONFIGURE TRAFFIC LIGHT PINS
   // ==============================================================
 
   for (int i = 0; i < ROAD_COUNT; i++) {
@@ -339,7 +277,9 @@ void setup() {
   // ALL TRAFFIC LIGHTS RED
   // ==============================================================
 
-  Serial.println("Setting ALL TRAFFIC LIGHTS RED...");
+  Serial.println(
+    "Setting ALL TRAFFIC LIGHTS RED..."
+  );
 
   setAllRed();
 
@@ -359,7 +299,9 @@ void setup() {
 
 
   Serial.println();
-  Serial.println("ESP32 traffic controller ready.");
+  Serial.println(
+    "ESP32 traffic controller ready."
+  );
   Serial.println();
 
 }
@@ -371,9 +313,6 @@ void setup() {
 
 void loop() {
 
-  unsigned long now = millis();
-
-
   // ==============================================================
   // MAINTAIN WIFI
   // ==============================================================
@@ -382,8 +321,11 @@ void loop() {
 
 
   // ==============================================================
-  // POLL BACKEND EVERY SECOND
+  // POLL BACKEND
   // ==============================================================
+
+  unsigned long now = millis();
+
 
   if (
     now - lastPoll >=
@@ -397,6 +339,22 @@ void loop() {
 
 
   // ==============================================================
+  // IMPORTANT:
+  //
+  // Get a NEW millis() value AFTER pollSignalStatus().
+  //
+  // The HTTP request is blocking and takes real time.
+  // On successful response, pollSignalStatus() updates:
+  //
+  // lastSuccessfulBackendResponse = millis();
+  //
+  // Therefore we must refresh 'now' before checking failsafe.
+  // ==============================================================
+
+  now = millis();
+
+
+  // ==============================================================
   // BACKEND FAILSAFE
   // ==============================================================
 
@@ -405,20 +363,45 @@ void loop() {
     BACKEND_FAILSAFE_MS
   ) {
 
+    if (!failsafeActive) {
+
+      failsafeActive = true;
+
+
+      Serial.println();
+
+      Serial.println(
+        "========================================"
+      );
+
+      Serial.println(
+        "FAIL-SAFE ACTIVATED"
+      );
+
+      Serial.println(
+        "Backend unavailable -> ALL RED"
+      );
+
+      Serial.println(
+        "========================================"
+      );
+    }
+
+
     backendConnected = false;
 
-    Serial.println(
-      "FAIL-SAFE: Backend unavailable -> ALL RED"
-    );
 
+    // All roads RED
     setAllRed();
 
+
+    // Emergency indicator OFF
     digitalWrite(
       EMERGENCY_PIN,
       LOW
     );
 
-    // Do NOT use old backend state
+
     return;
   }
 
@@ -490,6 +473,7 @@ void connectWiFi() {
     Serial.println(
       "WiFi CONNECTED!"
     );
+
 
     Serial.print(
       "ESP32 IP address: "
@@ -621,9 +605,11 @@ bool pollSignalStatus() {
 
     backendConnected = false;
 
+
     Serial.println(
       "WiFi unavailable. Backend poll skipped."
     );
+
 
     return false;
   }
@@ -887,8 +873,42 @@ bool pollSignalStatus() {
   backendConnected = true;
 
 
+  // IMPORTANT:
+  // Record the actual successful response time.
+
   lastSuccessfulBackendResponse =
     millis();
+
+
+  // ==============================================================
+  // RESET FAILSAFE
+  // ==============================================================
+
+  if (
+    failsafeActive
+  ) {
+
+    failsafeActive = false;
+
+
+    Serial.println();
+
+    Serial.println(
+      "========================================"
+    );
+
+    Serial.println(
+      "BACKEND CONNECTION RESTORED"
+    );
+
+    Serial.println(
+      "Traffic control resumed."
+    );
+
+    Serial.println(
+      "========================================"
+    );
+  }
 
 
   // ==============================================================
@@ -944,12 +964,15 @@ void applyTrafficState() {
       "Simulation stopped -> ALL RED"
     );
 
+
     setAllRed();
+
 
     digitalWrite(
       EMERGENCY_PIN,
       LOW
     );
+
 
     return;
   }
@@ -967,12 +990,15 @@ void applyTrafficState() {
       "Simulation finished -> ALL RED"
     );
 
+
     setAllRed();
+
 
     digitalWrite(
       EMERGENCY_PIN,
       LOW
     );
+
 
     return;
   }
@@ -990,7 +1016,9 @@ void applyTrafficState() {
       "No active road -> ALL RED"
     );
 
+
     setAllRed();
+
 
     return;
   }
@@ -1018,7 +1046,9 @@ void applyTrafficState() {
       activeRoad
     );
 
+
     setAllRed();
+
 
     return;
   }
@@ -1033,7 +1063,7 @@ void applyTrafficState() {
   ) {
 
     Serial.print(
-      "🚑 EMERGENCY -> "
+      "EMERGENCY -> "
     );
 
     Serial.print(
@@ -1045,12 +1075,10 @@ void applyTrafficState() {
     );
 
 
-    // Active road GREEN
-    // All other roads RED
-
     setRoadGreen(
       roadIndex
     );
+
 
     return;
   }
@@ -1067,7 +1095,7 @@ void applyTrafficState() {
   ) {
 
     Serial.print(
-      "🟡 YELLOW -> "
+      "YELLOW -> "
     );
 
     Serial.print(
@@ -1087,12 +1115,10 @@ void applyTrafficState() {
     );
 
 
-    // Active road YELLOW
-    // Other roads RED
-
     setRoadYellow(
       roadIndex
     );
+
 
     return;
   }
@@ -1103,7 +1129,7 @@ void applyTrafficState() {
   // ==============================================================
 
   Serial.print(
-    "🟢 GREEN -> "
+    "GREEN -> "
   );
 
   Serial.print(
@@ -1123,9 +1149,6 @@ void applyTrafficState() {
   );
 
 
-  // Active road GREEN
-  // Other roads RED
-
   setRoadGreen(
     roadIndex
   );
@@ -1134,17 +1157,6 @@ void applyTrafficState() {
 
 // ================================================================
 // 15. ALL ROADS RED
-// ================================================================
-//
-// Example when North is active:
-//
-// North -> RED OFF
-// South -> RED ON
-// East  -> RED ON
-// West  -> RED ON
-//
-// setRoadGreen() then changes North to GREEN.
-//
 // ================================================================
 
 void setAllRed() {
@@ -1217,20 +1229,6 @@ void setRoadRed(
 // ================================================================
 // 17. ONE ROAD YELLOW
 // ================================================================
-//
-// Active road:
-//
-// RED    = OFF
-// YELLOW = ON
-// GREEN  = OFF
-//
-// Other 3 roads:
-//
-// RED    = ON
-// YELLOW = OFF
-// GREEN  = OFF
-//
-// ================================================================
 
 void setRoadYellow(
   int index
@@ -1246,7 +1244,8 @@ void setRoadYellow(
 
 
   // --------------------------------------------------------------
-  // SAFETY: FIRST MAKE EVERY ROAD RED
+  // SAFETY:
+  // First make every road RED
   // --------------------------------------------------------------
 
   setAllRed();
@@ -1281,20 +1280,6 @@ void setRoadYellow(
 // ================================================================
 // 18. ONE ROAD GREEN
 // ================================================================
-//
-// Active road:
-//
-// RED    = OFF
-// YELLOW = OFF
-// GREEN  = ON
-//
-// Other 3 roads:
-//
-// RED    = ON
-// YELLOW = OFF
-// GREEN  = OFF
-//
-// ================================================================
 
 void setRoadGreen(
   int index
@@ -1310,7 +1295,8 @@ void setRoadGreen(
 
 
   // --------------------------------------------------------------
-  // SAFETY: FIRST MAKE EVERY ROAD RED
+  // SAFETY:
+  // First make every road RED
   // --------------------------------------------------------------
 
   setAllRed();
@@ -1405,6 +1391,7 @@ void printBackendState() {
     "Backend: "
   );
 
+
   Serial.println(
     backendConnected ?
     "CONNECTED" :
@@ -1415,6 +1402,7 @@ void printBackendState() {
   Serial.print(
     "Simulation: "
   );
+
 
   Serial.println(
     simulationRunning ?
@@ -1450,9 +1438,11 @@ void printBackendState() {
     "Timer: "
   );
 
+
   Serial.print(
     timerRemaining
   );
+
 
   Serial.println(
     " seconds"
@@ -1462,6 +1452,7 @@ void printBackendState() {
   Serial.print(
     "Emergency: "
   );
+
 
   Serial.println(
     emergency ?
@@ -1473,6 +1464,7 @@ void printBackendState() {
   Serial.print(
     "Finished: "
   );
+
 
   Serial.println(
     simulationFinished ?
